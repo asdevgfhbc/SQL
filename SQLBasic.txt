@@ -1,0 +1,123 @@
+le-3
+CREATE DATABASE slgs;
+
+SHOW DATABASES ;
+
+DROP DATABASE slgs;
+
+le-4
+USE slgs;
+CREATE TABALE users (
+       ID INT(11),
+       fastname VARCHAR (32);
+       lastname VARCHAR (32),
+       regnumber CHAR (11),
+       phonenuber INT (11),
+       age INT (2)
+     );
+
+le-6
+USE slgs;
+CREATE TABALE users (
+       ID INT(11) PRIMARY KEY,
+       fastname VARCHAR (32);
+       lastname VARCHAR (32),
+       regnumber CHAR (11),
+       phonenuber INT (11),
+       age INT (2)
+     );
+USE slgs;
+CREATE TABALE users (
+       ID INT(11),
+       fastname VARCHAR (32);
+       lastname VARCHAR (32),
+       regnumber CHAR (11),
+       phonenuber INT (11),
+       age INT (2),
+       PRIMARY KEY(ID) 
+     );
+le-7
+USE slgs;
+CREATE TABALE users (
+       ID INT(11) PRIMARY KEY,
+       fastname VARCHAR (32);
+       lastname VARCHAR (32),
+       regnumber CHAR (11) NOT NULL,
+       phonenuber INT (11),
+       age INT (2)
+     );
+
+le-8
+USE slgs;
+CREATE TABALE users (
+       ID INT(11) PRIMARY KEY,
+       fastname VARCHAR (32);
+       lastname VARCHAR (32),
+       regnumber CHAR (11) DEFUALT 000000,
+       phonenuber INT (11),
+       age INT (2)
+     );
+
+USE slgs;
+CREATE TABALE users (
+       ID INT(11) PRIMARY KEY,
+       fastname VARCHAR (32);
+       lastname VARCHAR (32) DEFALT 'LASTNAME',
+       regnumber CHAR (11),
+       phonenuber INT (11),
+       age INT (2)
+     );
+
+le-9
+USE slgs;
+INSERT INTO user 
+VALUSE (1,'dharana','abeyrathne','slg123',0754114979,24);
+
+USE slgs;
+INSERT INTO user (ID,fastnam,lastname,regnumber,phonenuber)
+VALUSE(1,'dhaana','abeyrathe','slg123',012344444);
+
+le-10
+USE slgs;
+SELECT  * FROM users;
+
+USE slgs;
+SELECT fastname FROM users;
+
+USE slgs;
+SELECT  fsatname,lastname FROM users;
+
+le-11
+USE slgs;
+SELECT fastname FROM users 
+WHERE ID=1;
+
+USE slgs;
+SELECT *FROM users
+WHERE ID=2;
+
+USE slgs;
+SELECT phonenuber FROM users
+WHERE regnuber='slg123';
+
+USE slgs;
+SELECT regnuber FROM users
+WHERE age >20;
+
+USE slgs;
+SELECT regnuber,ID FROM users
+WHERE age >25;
+
+le-12
+USE slgs;
+SELECT * FROM users 
+WHERE age<20 AND lastname='vimalaviera';
+
+USE slgs;
+SELECT *FROM users
+WHERE age<20 OR lastname='vimalavira';
+
+USE slgs;
+SELECT * FROM users
+WHERE age >20 AND NOT lastname='vimalavira';
+
