@@ -54,3 +54,8 @@ Start → cmd open කරලා:
 sqlplus system/9275290Dd$%@localhost:1521/ORCL
 
 
+
+
+
+
+

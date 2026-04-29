@@ -23,3 +23,447 @@ Oracle ඇයි ඕනේ?
 DUAL table = calculation/function test කරන්නේ ඒ Oracle ගේ syntax rule නිසා.
 
 Oracle ලා database concept එක Schema කියලා කියනවා.
+C:\Projects\
+    ├── school_project\ ← Schema 1
+    │     ├── students
+    │     ├── teachers
+    │     └── subjects
+    │
+    ├── hospital_project\ ← Schema 2
+    │     ├── patients
+    │     ├── doctors
+    │     └── appointments
+    │
+    └── shop_project\   ← Schema 3
+          ├── products
+          ├── orders
+          └── customers
+
+Oracle ලා Schema = User. User කෙනෙක් හදනකොට
+ ඒ user ගේ "folder" (schema) automatically හැදෙනවා.
+USER කියන්නේ Oracle ලා ගොඩාක් meaning ගොඩාක්
+තැන් ලා use වෙනවා — context එක අනුව meaning වෙනස් වෙනවා
+CREATE USER school_db IDENTIFIED BY pass123;
+මෙතනදී USER = Oracle database ලා login account එකක්.
+USER — Oracle built-in function
+USER කියන්නේ දැන් login වෙලා ඉන්න user ගේ නම return කරන function එකක් ද වෙනවා:
+SELECT USER FROM dual;
+
+User vs Schema — same දෙයක්
+Oracle ලා User = Schema. User හදනකොට automatically schema හැදෙනවා:
+CREATE USER school_db 
+school_db කියන folder (schema) automatically හැදෙනවා
+ඒ user ලා login වෙලා හදන tables ඔක්කොම
+school_db schema ලා store වෙනවා
+
+Context USER meaning
+CREATE USER nimalනව login account හදනවා
+DROP USER nimalඒ account delete කරනවා
+GRANT ... TO nimalඒ user ලට permission දෙනවා
+SELECT USER FROM dualදැන් login වෙලා ඉන්නේ කවුද?
+
+CREATE USER school_db IDENTIFIED BY pass123;
+│           │          │              │
+│           │          │              └── password එක
+│           │          └── "මේ password ලා හඳුනාගන්නවා"
+│           └── user ගේ නම
+└── නව user හදනවා
+
+CREATE USER school_db;
+ERROR! Password නැතිව user හදන්නේ බෑ
+
+හැම user ලාටම වෙනස් password
+CREATE USER school_db    IDENTIFIED BY Sch#2024$xK;
+CREATE USER hospital_db  IDENTIFIED BY H0sp!t@l99;
+CREATE USER shop_db      IDENTIFIED BY Sh0p&Secure7;
+
+Password same වුණොත් මොකද වෙන්නේ?
+school_db   → password: pass123
+hospital_db → password: pass123
+shop_db     → password: pass123
+තාක්ෂණිකව Oracle allow කරනවා — error එකක් එන්නේ නෑ. ඒත් security risk
+
+නරක:   pass123, password, abc123
+හොඳ:   K9#mPx$2qL  (uppercase + lowercase
+                        + numbers + symbols)
+
+Oracle install කරනකොට:
+  SYSTEM user password → ඔයා දෙනවා (admin password)
+ඔයා හදන users:
+  school_db password   → ඔයා decide කරනවා
+  hospital_db password → ඔයා decide කරනවා
+
+ALTER USER dharana IDENTIFIED BY newpass456;
+ALTER = "වෙනස් කරනවා" කියන keyword. Password reset කරලා 
+dharana ලට කියනවා  දැන් newpass456 ලා login වෙන්නට කියලා.
+
+Step 1: CREATE USER school_db ...
+        → Account exist වෙනවා
+        → Login වෙන්නේ බෑ 
+Step 2: GRANT CONNECT TO school_db
+        → Login permission ලැබෙනවා
+        → Login වෙන්නට පුළුවන් 
+        → ඒත් tables හදන්නේ බෑ 
+Step 3: GRANT RESOURCE TO school_db
+        → Tables හදන්නට permission ලැබෙනවා
+        → CREATE TABLE කරන්නට පුළුවන් 
+
+CREATE TABLE students 
+CREATE TABLE නව table එකක් හදනවා කියන keyword.
+students Table ගේ නම. ඔයාට ඕනේ නමක් — employees, products ඕනෑම.
+
+ID  NUMBER PRIMARY KEY
+ID Column ගේ නම. ඕනෑ නමක් දෙන්නට පුළුවන්  student_id, num ඕනෑම.
+NUMBER Data type  ඉලක්කම් (1, 2, 100, 9999). Text නෙමෙයි, number විතරක් store කරනවා.
+PRIMARY KEY මේ column = හැම row ලාම unique identifier. Duplicate values දාන්නේ බෑ, 
+NULL දාන්නේ බෑ. Student ID card number වගේ  හැමෝගේ වෙනස්.
+
+DUAL හදලා තියෙන්නේ ගණනය කිරීම් සහ functions ලට 
+SELECT 10 + 20 FROM dual;
+Row 2ක් තිබ්බොත් 
+RESULT
+30 ← row 1 නිසා
+30    ← row 2 නිසා
+Row 0  →  result නෑ   
+Row 1  →  result එකයි   perfect!
+Row 2+ →  result duplicate 
+
+Functions කියන්නේ කලින් හදලා දාලා තියෙන කාර්යයක් ඔයා ඒකට values දෙනවා, 
+ඒක process කරලා answer දෙනවා
+
+හිතන්න Calculator එකක්:
+ඔයා: 7 × 8 = ?
+Calculator: 56  ← answer දෙනවා
+ඔයාට 7×8 කොහොමද calculate වෙන්නේ
+කියලා දැනගන්නට ඕනේ නෑ Calculator ඇතුළේ කාර්යය කරලා answer දෙනවා
+
+Function ලා ලියන Format එක
+FUNCTION_NAME(value)
+function නම    ඔයා දෙන value
+
+Oracle Functions 
+1. Text (String) Functions — words/letters වලට
+1. UPPER — Small letters → Capital letters
+SELECT UPPER('hello') FROM dual;  -- Result: HELLO
+2. LOWER — Capital letters → Small letters
+SELECT LOWER('HELLO WORLD') FROM dual;-- Result: hello world
+3. LENGTH — Text ලා letters ගණන
+SELECT LENGTH('Oracle') FROM dual;-- Result: 6
+4. SUBSTR — Text ලා කොටසක් ගන්නවා
+SELECT SUBSTR('Hello World', 1, 5) FROM dual;-- Result: Hello
+SUBSTR('Hello World', 1, 5)
+  H e l l o   W o r l d
+1 2 3 4 5 6 7 8 9 10 11
+↑           ↑
+start=1  5 characters → Hello
+5. TRIM — Spaces අයින් කරනවා
+SELECT TRIM('  hello  ') FROM dual;-- Result: hello
+6. REPLACE — Word එකක් වෙනත් word එකකට
+SELECT REPLACE('Hello World', 'World', 'Oracle') FROM dual;-- Result: Hello Oracle
+7. CONCAT — Words 2ක් එකට එකතු කරනවා
+SELECT CONCAT('Hello', ' World') FROM dual;-- Result: Hello World
+SELECT 'Hello' || ' ' || 'World' FROM dual;-- Result: Hello World
+
+2. Number Functions — ගණන් වලට
+1. ROUND — Round කරනවා
+SELECT ROUND(3.7) FROM dual;-- Result: 4
+හිතන්න: ගණිතේ ලා කළා වගේ
+0.5 ට වැඩි → ඉහළට  (3.7 → 4)
+0.5 ට අඩු  → පහළට  (3.2 → 3)
+Decimal places specify කරන්නත් පුළුවන්:
+SELECT ROUND(3.4567, 2) FROM dual;-- Result: 3.46  ← decimal 2ක් විතරක්
+2. TRUNC — Round නොකර Cut කරනවා
+SELECT TRUNC(3.9) FROM dual;-- Result: 3  ← 4 නෙමෙයි
+SELECT TRUNC(3.4567, 2) FROM dual;-- Result: 3.45  ← round නොකර cut
+3. ABS — Negative → Positive
+SELECT ABS(-50) FROM dual;-- Result: 50
+SELECT ABS(50) FROM dual;-- Result: 50  ← already positive
+4. MOD — ඉතිරිය (Remainder)
+SELECT MOD(10, 3) FROM dual;-- Result: 1(10 ÷ 3 = 3 remainder 1)
+SELECT MOD(10, 2) FROM dual;-- Result: 0(10 ÷ 2 = 5 remainder 0 → even number)
+5. POWER — Power (අතකි) ගණනය
+SELECT POWER(2, 10) FROM dual;-- Result: 1024(2 × 2 × 2 × ... 10 times)
+SELECT POWER(3, 2) FROM dual;-- Result: 9  ← 3²
+6. SQRT — Square Root
+SELECT SQRT(25) FROM dual;-- Result: 5  ← √25
+7. CEIL — සැම විටම ඉහළට Round
+SELECT CEIL(3.1) FROM dual;-- Result: 4  ← 3.1 වුණත් 4 ලා
+SELECT CEIL(3.9) FROM dual;-- Result: 4
+
+3. Date Functions — දිනයන් වලට
+1. SYSDATE — අද දිනය සහ වේලාව
+SELECT SYSDATE FROM dual;-- Result: 29-APR-26  (අද දිනය)
+2. SYSDATE + Numbers — දිනයන් එකතු කරනවා
+SELECT SYSDATE + 7  FROM dual;-- Result: 06-MAY-26  (සතියකට පස්සේ)
+SELECT SYSDATE - 7  FROM dual;-- Result: 22-APR-26  (සතියකට කලින්)
+3. ADD_MONTHS — මාස එකතු කරනවා
+SELECT ADD_MONTHS(SYSDATE, 3) FROM dual;-- Result: 29-JUL-26  (මාස 3කට පස්සේ)
+4. MONTHS_BETWEEN — මාස ගණන
+SELECT MONTHS_BETWEEN(SYSDATE, '01-JAN-26')
+FROM dual;--Result: 3.9...  (JAN සිට අද දක්වා මාස ගණන)
+5. NEXT_DAY — ඊළඟ weekday
+SELECT NEXT_DAY(SYSDATE, 'MONDAY') FROM dual;-- Result: ඊළඟ Monday ගේ date
+6. LAST_DAY — මාසේ අන්තිම දිනය
+SELECT LAST_DAY(SYSDATE) FROM dual;-- Result: 30-APR-26  (April ගේ අන්තිම දිනය)
+7. TO_CHAR — Date → Text ලා convert
+SELECT TO_CHAR(SYSDATE, 'DD-MM-YYYY') FROM dual;-- Result: 29-04-2026
+SELECT TO_CHAR(SYSDATE, 'DAY') FROM dual;-- Result: WEDNESDAY
+SELECT TO_CHAR(SYSDATE, 'DD/MM/YYYY HH:MI:SS') FROM dual;-- Result: 29/04/2026 10:30:45
+8. TO_DATE — Text → Date ලා convert
+SELECT TO_DATE('29-04-2026', 'DD-MM-YYYY')
+FROM dual;-- Result: 29-APR-26
+
+Oracle functions මුළු ගණන → 200+
+Beginners ලා ඕනේ → 20-30 විතරයි
+Real job ලා daily use → 40-50 විතරයි
+
+Functions ඇතුළේ Functions දාන්නත් පුළුවන්
+SELECT UPPER(SUBSTR('hello world', 1, 5)) FROM dual;
+UPPER  SUBSTR('hello world',1,5) = 'hello'
+ UPPER('hello') = 'HELLO'
+
+මෙහෙම manually number දාන්නේ ප්‍රශ්නකාරී:
+Users 1000ක් එකවර data දැම්මොත්?
+කවුද 1, 2, 3 කියලා manage කරන්නේ?
+Same number 2 පාරක් දැම්මොත්? → ERROR
+
+Sequence හදන්නේ කොහොමද?
+CREATE SEQUENCE my_sequence
+    START WITH 1001
+    INCREMENT BY 1
+    NOCYCLE;
+START WITH 1001  → පටන් ගන්නේ 1001 ලා
+INCREMENT BY 1   → හැම පාරක්ම 1 බැගින් වැඩිවෙනවා
+NOCYCLE → 1001, 1002, 1003... නතර වෙන්නේ නෑ
+
+NEXTVAL — ඊළඟ number ගන්නවා
+sqlSELECT my_sequence.NEXTVAL FROM dual;-- Result: 1001  (පළමු පාර)
+SELECT my_sequence.NEXTVAL FROM dual;-- Result: 1002  (දෙවන පාර)
+
+CURRVAL — දැන් ඉන්න number බලනවා
+SELECT my_sequence.CURRVAL FROM dual;-- Result: 1003  (දැන් ඉන්නේ 1003 ලා)
+
+Real Use — INSERT ලා Sequence use කරනවා
+INSERT INTO students (id, name)
+VALUES (my_sequence.NEXTVAL, 'Nimal');-- id = 1001 automatic ලා
+
+AS කියන්නේ මොකද?
+AS = "මේකට මේ නම දෙනවා" කියන keyword Result column ගේ නම වෙනස් කරනවා
+ AS තිබ්බොත්:
+ ┌───────────┐
+ │   today       │
+ ├───────────┤
+ │29-APR-26│
+ └───────────┘ column නම clean
+
+UPPER('oracle') AS upper_text,
+UPPER('oracle') → 'oracle' → 'ORACLE' කරනවා
+AS upper_text   → ඒ column ගේ නම "upper_text", → තව column එකක් එනවා
+100 * 1.08 AS with_tax
+100 * 1.08  → 100 ගේ 8% tax එකතු කරනවා = 108
+AS with_tax → ඒ column ගේ නම "with_tax" 
+FROM dual;
+Table data ඕනේ නෑ calculation විතරක් ඕනේ ඒකට DUAL use කරනවා
+
+┌────────────┬────────────┬──────────┐   
+│   today    │ upper_text │ with_tax │          
+├────────────┼────────────┼──────────┤    
+│ 29-APR-26  │   ORACLE   │   108    │         
+└────────────┴────────────┴──────────┘     
+     ↑              ↑          ↑                                                  
+  SYSDATE      UPPER(oracle)  100*1.08        
+
+AS නැතිවත් වැඩ කරනවා — ඒත්
+SELECT SYSDATE, UPPER('oracle'), 100 * 1.08
+FROM dual;
+┌──────────┬────────────────┬───────────┐
+│SYSDATE UPPER('ORACLE') 100 * 1.08│
+├──────────┼────────────────┼───────────┤
+│29-APR-26 │    ORACLE        │    108           │
+└──────────┴────────────────┴───────────┘
+column names ugly — AS දුන්නොත් clean
+
+SELECT * → ඔක්කොම columns
+SELECT col1, col2 → specific columns
+WHERE condition   → filter කරනවා
+AND / OR  → conditions combine
+ORDER BY col ASC  → ascending (අඩු → වැඩි)
+ORDER BY col DESC → descending (වැඩි → අඩු)
+
+ORDER BY — Sort කිරීම marks අඩු order ලා (DESC)
+SELECT name, marks FROM students
+ORDER BY marks DESC;
+Result:
+NAME    MARKS
+Sunil   90
+Nimal   85
+Amara   78
+Kamala  72
+Perera  65
+
+WHERE කියන්නේ මොකද?
+Table ලා data ගොඩාක් තියෙනවා ඒ ඔක්කොම ඕනේ නෑ, specific data විතරක් ඕනේ ඒකට WHERE use කරනවා
+
+Supermarket = Table (ඔක්කොම products)
+WHERE       = "Rice විතරක් දෙන්න"→ filter කරලා specific items ගන්නවා
+
+Comparison Operators
+>   වැඩිය        WHERE marks > 80
+<   අඩුය         WHERE marks < 70
+>=  වැඩිය හෝ =  WHERE marks >= 72
+<=  අඩුය හෝ =   WHERE marks <= 72
+=   සමාන         WHERE city = 'Colombo'
+!=  සමාන නෑ     WHERE city != 'Colombo'
+
+AND — දෙකම true විය යුතුයි
+OR — එකක් හෝ true වෙනවා ඇති
+NOT — condition reverse කරනවා
+SELECT name, city FROM students(Colombo නොවන students)
+WHERE NOT city = 'Colombo';
+AND + OR එකට — Brackets වැදගත්
+BETWEEN — Range ලා
+SELECT name, marks FROM students( marks 70 ත් 85 ත් අතර)
+WHERE marks BETWEEN 70 AND 85;
+IN — List ලා check කරනවා
+SELECT name, city FROM students(Colombo හෝ Kandy හෝ Galle)
+WHERE city IN ('Colombo', 'Kandy');
+LIKE — Pattern ලා search
+SELECT name FROM students
+WHERE name LIKE 'N%
+%  = ඕනෑ characters ගොඩාක්
+_  = characters එකක් විතරක්
+'N%'   → N ලා පටන් ගන්නවා   → Nimal
+'%a'   → a ලා ඉවර වෙනවා     → Kamala, Amara
+'%im%' → im ඇතුළේ තියෙනවා   → Nimal
+
+ORDER BY කියන්නේ මොකද?
+Result එක sort කරනවා 
+ASC  = අඩු → වැඩි (A→Z, 1→9) -default
+DESC = වැඩි → අඩු (Z→A, 9→1)
+
+ Single Column — ASC( marks අඩු → වැඩි)
+SELECT name, marks FROM students
+ORDER BY marks ASC;
+Result:
+NAME    MARKS
+Dilani  55
+Perera  65
+Kamala  72
+Kasun   72
+Nimal   85
+Amara   85
+Sunil   90
+ASC = default, ලියන්නේ නැතිවත් වැඩ කරනවා
+Multiple Columns Sort — වැදගත්ම part(marks DESC, ඒකම නම් name ASC)
+SELECT name, marks FROM students
+ORDER BY marks DESC, name ASC;
+Result:
+NAME    MARKS
+Sunil   90
+Amara   85    ← A
+Nimal   85    ← N  (marks same නිසා name ලා sort)
+Kamala  72    ← Ka
+Kasun   72    ← Ka  (marks same නිසා name ලා sort)
+Perera  65
+Dilani  55
+
+Column Number ලා Sort ( Shortcut 2 = marks column (SELECT ලා 2වෙනි))
+SELECT name, marks, city FROM students
+ORDER BY 2 DESC, 1 ASC;
+SELECT list:
+1 = name
+2 = marks
+3 = city
+ORDER BY 2 DESC = marks DESC
+ORDER BY 1 ASC  = name ASC
+
+WHERE + ORDER BY එකට(Colombo students marks order ලා)
+SELECT name, city, marks FROM students
+WHERE city = 'Colombo'
+ORDER BY marks DESC;
+Result:
+NAME    CITY     MARKS
+Nimal   Colombo  85
+Kasun   Colombo  72
+Perera  Colombo  65
+Order: WHERE කලින් → ඊට පස්සේ ORDER BY
+
+Functions ලා ORDER BY(name length ලා sort)
+SELECT name, LENGTH(name) AS name_len
+FROM students
+ORDER BY LENGTH(name) ASC;
+Result:
+NAME    NAME_LEN
+Sunil   5
+Nimal   5
+Kasun   5
+Amara   5
+Kamala  6
+Perera  6
+Dilani  6
+
+SQL Statement ලියන Order
+SELECT  → කොයි columns?
+FROM    → කොයි table?
+WHERE   → filter?
+ORDER BY→ sort?
+SELECT name, marks
+FROM students
+WHERE marks > 70
+ORDER BY marks DESC;
+ORDER BY සැම විටම අන්තිමට
+
+ඔයා Bank ලා transfer කරනවා:
+  Account A: Rs.10,000 අඩු කරනවා
+  Account B: Rs.10,000 එකතු කරනවා
+මේ දෙකම success වෙන්නට ඕනේ!
+එකක් fail වුණොත් undo කරන්නට ඕනේ
+COMMIT — "Save කරනවා"
+INSERT INTO students VALUES (6,'Kasun',22,'Galle',88);
+UPDATE students SET marks = 95 WHERE id = 1;
+COMMIT;( දැන් permanently save)
+COMMIT කලිනුත්:
+→ ඔයාට විතරක් changes පෙනෙනවා
+→ වෙන users ලාට පෙනෙන්නේ නෑ
+COMMIT කළාට පස්සේ:
+→ සියලු users ලාට පෙනෙනවා
+→ Permanently save 
+
+ROLLBACK — "Undo කරනවා"
+DELETE FROM students WHERE id = 3;(අනේ! වැරදි row delete වුණා)
+ROLLBACK; -- Undo! data ආපහු එනවා 
+COMMIT කලිනුත් ROLLBACK කළොත්
+→ changes ඔක්කොම undo වෙනවා 
+COMMIT කළාට පස්සේ ROLLBACK කළොත්
+→ undo වෙන්නේ නෑ 
+
+SAVEPOINT — Partial Undo
+INSERT INTO students VALUES (6,'Kasun',22,'Galle',88);
+SAVEPOINT point1; -- checkpoint!
+INSERT INTO students VALUES (7,'Dilani',24,'Kandy',76);
+SAVEPOINT point2;
+UPDATE students SET marks = 0 WHERE id = 1;( අනේ! වැරදුණා)
+ROLLBACK TO point2;( point2 ඉඳලා undo,Kasun, Dilani ඉන්නවා ,marks update undo )
+COMMIT; (Kasun, Dilani permanently save)
+SAVEPOINT = Game ලා checkpoint වගේ→ ඒ point ලට ආපහු යන්නට පුළුවන්
+
+Real Scenario — Bank Transfer(Account A ලා අඩු කරනවා)
+UPDATE accounts
+SET balance = balance - 10000
+WHERE account_id = 101;
+Account B ලා එකතු කරනවා
+UPDATE accounts
+SET balance = balance + 10000
+WHERE account_id = 202;(දෙකම success නම්)
+COMMIT; (Error ආවොත්,ROLLBACK)
+
+Golden Rules
+1. UPDATE / DELETE ලා
+   සැම විටම WHERE දාන්න
+2. Changes කලිනුත්
+   SELECT ලා data check කරන්න
+3. COMMIT කලිනුත්
+   result verify කරන්න
+4. Doubt නම් ROLLBACK
+   COMMIT කළාට පස්සේ undo බෑ
+
