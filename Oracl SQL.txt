@@ -1,0 +1,56 @@
+Oracle කියන්නේ ලෝකේ විශාලතම software සහ technology සමාගම් වලින් එකක්.
+ ප්‍රධාන වශයෙන් database සහ enterprise software හදන company එකක්.
+
+Oracle වල ප්‍රධාන නිෂ්පාදන
+1. Oracle Database
+ලෝකේ වැඩිම භාවිතා වන relational database system එකක්. Banks, hospitals, governments ඔක්කොම Oracle Database use කරනවා.
+2. Oracle Cloud (OCI)
+Amazon AWS, Google Cloud වගේ cloud platform එකක්. Servers, storage, AI services දෙනවා.
+3. Java
+Oracle තමයි Java programming language manage කරන්නේ. Sun Microsystems ගෙන් 2010දී ගත්තා.
+4. MySQL
+Free/open-source database එකක් - Oracle සතුයි.
+5. ERP Systems (Oracle Fusion / NetSuite)
+Business manage කරන software - accounting, HR, supply chain ඔක්කොම.
+
+SQLData  query කරන භාෂාව
+PL/SQL Oracle වල programming language
+ACID Data safety guarantee
+High Availability Down වෙන්නේ නැති විදිහට
+
+Oracle ඉගෙනගන්නේ ඇයි?
+ Sri Lanka වල බොහෝ banks සහ corporates Oracle use කරනවා
+ Oracle DBA, Developer jobs හොඳ salary දෙනවා
+ Oracle Certifications (OCA, OCP) ගෝලීය වශයෙන් recognized
+
+Oracle සමාගම දෙන official හඳුනාගැනීම් (credentials) 
+ ඔයාට Oracle technology හරියට දන්නවා කියලා ලෝකයටම prove කරන්න.
+ප්‍රධාන Certification Levels
+OCA — Oracle Certified Associate
+Entry level — පළමු පියවර
+Basic SQL, Database concepts
+උදා: Oracle Database SQL Certified Associate
+
+OCP — Oracle Certified Professional
+Mid level — OCA ගත්තාට පස්සේ
+Advanced DBA skills, Performance tuning
+උදා: Oracle Database 19c Certified Professional
+
+OCM — Oracle Certified Master
+Expert level — ඉහළම
+Hands-on exam (lab based)
+ලෝකේ ටිකක් දෙනෙක් විතරක් ඇති
+OCS — Oracle Certified Specialist
+නිශ්චිත product එකකට — Cloud, Java, etc.
+
+කොහොමද ශ්‍රී ලංකාවෙන් කරන්නේ?
+Oracle University — official site එකෙන් exam register කරන්න
+Pearson VUE — exam centers Sri Lanka වලත් තිබෙනවා (Colombo)
+Study Materials — Oracle docs, Udemy, YouTube free resources
+Exam Fee — approx USD 150–245 per exam
+
+CMD එකෙන් connect වෙන්න
+Start → cmd open කරලා:
+sqlplus system/9275290Dd$%@localhost:1521/ORCL
+
+
