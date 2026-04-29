@@ -1,0 +1,25 @@
+Oracle SQL vs Normal SQL
+Normal SQL (Standard)  →  හැම database එකකම වැඩ කරනවා
+Oracle SQL  →  Oracle database ලා extra features + functions තියෙනවා
+Oracle = world's most powerful databases වලින් එකක්.
+ Banks, hospitals, government systems ගොඩාක් Oracle use කරනවා.
+
+Database එකකට කතා කරන්නට use කරන language එකක්. ඔයා Sinhala 
+ලා කතා කරනවා වගේ, computer ලා database එකට කතා කරන්නේ SQL ලා.
+
+Normal SQL (Standard)  →  හැම database එකකම වැඩ කරනවා
+Oracle SQL→  Oracle database ලා extra features + functions තියෙනවා
+
+"--" මේ line code නෙමෙයි, comment එකක්
+Table/column names lowercase ලා ලියන්නේ (best practice)
+(employees, first_name, salary)
+
+DUAL table කියන්නේ මොකද?
+Oracle ලා automatically හදලා දෙන special table එකක්.
+Table එකක් නැතිව calculation හෝ function run කරන්නට use කරනවා.
+
+Oracle ඇයි ඕනේ?
+ඒක Oracle ගේ rule එකක්
+DUAL table = calculation/function test කරන්නේ ඒ Oracle ගේ syntax rule නිසා.
+
+Oracle ලා database concept එක Schema කියලා කියනවා.
