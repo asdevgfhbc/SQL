@@ -1,0 +1,163 @@
+(01) CREATE  TYPE dept_Type - නව data type එකක් හදනවා
+/
+/ කියන්නේ මොකක්ද?
+Oracle SQL*Plus හි / කියන්නේ "Execute" command එකයි.
+/  Buffer එකේ තියෙන SQL/PLSQL statement එක run කරනවා
+;   Statement එක end කරනවා (සාමාන්‍ය SQL)
+/   PL/SQL blocks, Types, Procedures, Functions වලට අනිවාර්යයෙන් දාන්න ඕනේ
+
+ඇයි / දාන්නේ?
+PL/SQL / CREATE TYPE වලදී හැමවිටම / දාන්න ඕනේ
+මේක නැතිව Oracle execute කරන්නේ නෑ
+
+සාමාන්‍ය SQL vs PL/SQL
+සාමාන්‍ය SQL  ; ප්‍රමාණවත්
+PL/SQL / CREATE TYPE    / අනිවාර්යයි
+
+SQL vs PL/SQL — වෙනස මොකක්ද?
+නම    Structured Query Language  Procedural Language / SQL
+අරමුණ  Data access කරන්න  Logic කරන්න
+Execute   එක statement    එකක්Block එකක්
+Loops  නෑ  තියෙනවා
+If/Else  නෑ  තියෙනවා
+Variables   නෑ  තියෙනවා
+Error Handling  නෑ  තියෙනවා
+
+SQL      = ප්‍රශ්නයක් අහනවා
+           "මේ ගෙදර කවුද ඉන්නේ?"
+PL/SQL   = ගෙදරට ගිහින් වැඩ කරනවා
+           "ගෙදරට යනවා → දොර ඇරනවා →
+            කෙනෙක් ඉන්නවා නම් කතා කරනවා →
+            නැත්නම් ආපහු එනවා"
+DECLARE
+    Variables හදනවා (optional)
+BEGIN
+    SQL + Logic (අනිවාර්ය)
+EXCEPTION
+    Errors handle කරනවා (optional)
+END;
+/
+
+Data Access  →  Database එක සමග කතා කරනවා
+                "Salary කීයද?" → 50000
+Logic        →  ඒ data එකෙන් තීරණයක් ගන්නවා
+                "50000 > 40000 නිසා Bonus දෙනවා"
+
+(02)CREATE TYPE employee_Type AS OBJECT(  -Employee කෙනෙක් කොහොම දේකද
+)
+
+Real Life එකෙන් හිතන්න:
+ලෝකේ "කාර්" කියලා දෙයක් තියෙනවා.
+කාර් එකක් කියන්නේ:
+Colour තියෙනවා
+Brand තියෙනවා  
+Speed තියෙනවා
+Run කරන්න පුළුවන්
+Stop කරන්න පුළුවන්
+"කාර්" කියන IDEA එක = Class / Type
+එක එක කාර් එකක් = Object
+
+දැන් Oracle වලට ගෙනියමු
+"Employee" කියලා දෙයක් තියෙනවා.
+
+Employee කෙනෙක් කියන්නේ:
+ID තියෙනවා
+නමක් තියෙනවා
+වැටුපක් තියෙනවා
+"Employee" කියන IDEA එක  = employee_Type
+එක එක Employee කෙනෙක්  = Object එකක්
+
+ case එකේදී — employess_Type already exist වෙලා තිබුණා,
+ ඒ නිසා FORCE දාලා drop කරලා නැවත CREATE කරනවා. 
+(already exist වෙලා තිබුණා vscode  agen Creat CMD  came to erro)
+
+ DROP TYPE Oracle database එකෙන් TYPE එකක් මකා දමනවා
+DROP TYPE employess_Type මකා දමන TYPE එකේ නම  මෙතනදී
+DROP TYPE employess_Type FORCE; 
+සාමාන්‍යයෙන් TYPE එකක් DROP කරන්න ගිහින් වෙන objects (tables, types) 
+ඒකට depend වෙලා තිබුණොත් Oracle error එකක් දෙනවා.
+FORCE දැම්මොත් — depend වෙච්ච objects තිබුණත් බලෙන් මකා දමනවා.
+depend වෙච්ච objects INVALID වෙනවා ඒවා පස්සේ fix 
+
+CREATE OR REPLACE TYPE employess_Type AS OBJECT
+OR REPLACE හොඳ?
+Steps    2 steps    1 step 
+Dependents      FORCE දාන්න වෙනවා        Automatically handle වෙනවා
+Permissions     Drop කරාම grants නැති වෙනවා    Grants එලෙසම තියෙනවා
+Safety    ටිකක් risky    වඩා safe
+
+(03)CREATE TYPE employess_Type AS OBJECT(
+    empno      CHAR(6),
+    firstName  VARCHAR(12),
+    lastName   VARCHAR(15),
+    workdept   REF dept_Type,
+    sex        CHAR(1),
+    birthdate  DATE,
+    salary     NUMBER(8,2)
+);
+/
+
+SQL*Plus වලදී ; අනිවාර්ය නැහැ / ඇති එක ඇති
+Oracle SQL*Plus එකේදී:
+; Statement end කරලා එකවරම execute කරනවා (simple SQL වලට)
+/ Buffer එකේ තියෙන command එක execute කරනවා (PL/SQL & TYPE වලට)
+
+_Type දාන්නේ ඇයි?(අනිවාර්ය නැහැ)
+හැබැයි _Type දැම්මොත්:
+Code එක කියවන්න පහසුයි 
+"මේක Type එකක්" කියලා වහාම තේරෙනවා 
+Team work වලදී හොඳ practice එකක් 
+
+TYPE = හැඩය/නිර්මාණය (Blueprint/Design)
+OBJECT = ඒකෙන් හදන එක (Real thing)
+
+CHAR-Fixed Length - නියම දිගකට characters store කරනවා
+ 'E001__  ' සැමවිටම 6
+ 'E00001' සැමවිටම 6
+ අඩු characters දුන්නොත් spaces දාලා 6 කරනවා
+VARCHAR-Variable Length - දුන්න දිගට characters store කරනවා
+'Kamal'  5
+'Wickramasinghe'   ❌ Error 15 නිසා
+'Nimal'  5
+Space waste වෙන්නේ නැහැ
+
+Alphabetically char and varchar-  A සිට Z දක්වා පිළිවෙලට සකස් කිරීම
+Numerically- number - Only 1 සිට ~ දක්වා පිළිවෙලට සකස් කිරීම
+
+CHAR(Letters + Numbers)Alphabetically
+VARCHAR(Letters + Numbers)Alphabetically
+10 කලින් එනවා 
+firstName VARCHAR(12)
+INSERT INTO ... VALUES ('Q000', ...)Quotes දාන්න ඕනෙ! 
+
+workdept REF dept_Type 
+workdept  Column එකේ නම
+REF  Reference කියන එක
+dept_Type  Reference කරන Type එක
+කියන්නේ dept_Type Object එකක
+Reference/Address එක store කරනවා
+නම:     Kamal
+දුරකථන: 0771234567  ←── මේක Kamal ගේ ලිපිනය
+REF ත් ඒ වගේමයි:
+Employee Record එකේ:
+empno:    E00001
+name:     Nimal
+workdept: →→→→ dept_Type Object එක
+                     (ලිපිනය) deptno: D001
+                                     deptname: IT
+                                     location: Colombo
+dept_Type = Department එකේ Blueprint 
+employess_Type = Employee කෙනෙකුගේ Blueprint 
+REF dept_Type = Department Blueprint එකෙන් හදපු Object එකට ලිපිනය 
+CREATE TYPE dept_Type
+/ හුදෙක් නම පමණයි declare කරලා 
+ඇයි එහෙම කළේ?
+employess_Type හදනකොට:
+workdept REF dept_Type
+dept_Type කලින් exist වෙන්න ඕනෙ
+
+Oracle වල Table වර්ග
+Normal Table = සාමාන්‍ය Rows සහ Columns 
+Object Table = Object Type එකෙන් හදන Table(Complex data වලට)
+
+
