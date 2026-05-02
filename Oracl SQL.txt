@@ -54,6 +54,11 @@ Start → cmd open කරලා:
 sqlplus system/9275290Dd$%@localhost:1521/ORCL
 
 
+Easy කරගන්න 
+CMD එකේ මෙහෙම type කරන්න: sqlplus
+Enter user-name: system
+Enter password: ********
+
 
 
 
