@@ -59,8 +59,78 @@ CMD එකේ මෙහෙම type කරන්න: sqlplus
 Enter user-name: system
 Enter password: ********
 
+VS Code Form එක Fill කරන්න
+Connection Name: practical 01  ✓
+Username:        system
+Password:        install කරනකොට දාපු password
+Hostname:        localhost      ✓
+Port:    1521           ✓
+Service Name:    orcl           ← මේක type කරන්න
 
+ඇයි මේක කරන්නේ?
+livesql.oracle.com = Internet ඕනේ
+                     Online editor
+                     Limited features
 
+VS Code + Oracle = ඔයාගේ PC ලා
+                   Internet නැතිව වැඩ කරනවා
+                   Professional tool
+                   Real projects කරන්නට
 
+දැන් ඔයා කරන්නේ මොකද?
+ඔයාගේ PC Oracle Database 21c (install කළා)
+VS Code + SQL Developer Extension
+Connection හදනවා — VS Code ලා Oracle ලට කතා කරන්නට
+හිතන්න TV remote වගේ:
+TV      = Oracle Database (ඔයාගේ PC ලා)
+Remote  = VS Code
+Connection = Remote ලා TV ලට connect වෙනවා
 
+VS Code ලා Oracle connect වුණාට පස්සේ ගොඩාක් දේවල්
+1. SQL Queries Run කරනවා
+2. Tables Visual ලා බලනවා
+Left panel → Connections → MyOracle
+           → Tables
+           → students   ← click කරලා
+                          table data බලනවා
+                          Excel vage!
+3. SQL Snippets — Ready Made Code
+Left panel → SQL SNIPPETS
+           → Aggregate Functions
+           → Character Functions
+           → Date/Time Functions
+           ↑
+   ඔයාගේ screen ලා already තියෙනවා!
+   Click කරලා ready code ගන්නට පුළුවන්
+4. Reports
+Left panel → REPORTS
+           → Database Administration
+           → Data Dictionary
+           → Table info...
 
+MyOracle
+  → කවුද හදුවේ?  VS Code extension
+                  automatically හදුවේ
+  → Username:     ??  (default settings)
+  → Service Name: ??
+practical 01
+  → කවුද හදුවේ?  ඔයා manually හදුවේ
+  → Username:     system
+  → Service Name: orcl
+  → Password:     ඔයා දාපු password
+Check කරන්නේ කොහොමද?
+MyOracle → right click
+         → "Edit Connection"
+         → Username, Service Name බලන්න
+practical 01 → right click
+             → "Edit Connection"
+             → Username, Service Name බලන්න
+
+CMD = Text විතරයි
+      type කරලා run කරනවා
+
+VS Code SQL Developer = 
+      Same දේවල් ✓
+      ඒත් Visual ලා පෙනෙනවා!
+      Click කරලා බලන්නට පුළුවන්
+      Results table ලා පෙනෙනවා
